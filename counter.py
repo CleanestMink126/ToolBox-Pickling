@@ -19,18 +19,38 @@ def update_counter(file_name, reset=False):
     reset: True if the counter in the file should be rest.
     returns: the new counter value
 
-    >>> update_counter('blah.txt',True)
+    >>> update_counter('blah.pickle',True)
     1
-    >>> update_counter('blah.txt')
+    >>> update_counter('blah.pickle')
     2
-    >>> update_counter('blah2.txt',True)
+    >>> update_counter('blah2.pickle',True)
     1
-    >>> update_counter('blah.txt')
+    >>> update_counter('blah.pickle')
     3
-    >>> update_counter('blah2.txt')
+    >>> update_counter('blah2.pickle')
     2
     """
-    pass
+    # counter = 0
+    # if(exists(file_name) and not reset):
+    #     fout = open(file_name, 'r')
+    #     s = fout.read()
+    #     counter = loads(s)
+    #
+    #
+    # fout = open(file_name, 'w')
+    #
+    # fout.write(dumps(counter+1).decode("utf-8"))
+
+    counter = 0
+    if(exists(file_name) and not reset):
+        fout = open(file_name, 'rb')
+        counter = load(fout)
+
+    fout = open(file_name, 'wb')
+    dump(counter+1, fout)
+    fout.seek(0, 0)
+    return counter + 1
+
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
